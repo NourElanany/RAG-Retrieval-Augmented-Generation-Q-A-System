@@ -19,27 +19,26 @@ import difflib
 class AdvancedArabicProcessor:
     def __init__(self):
         """معالج نصوص عربي متقدم مع ذكاء اصطناعي"""
-            # تعيين مسار تنزيل NLTK داخل المشروع
+           
         self.nltk_data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'nltk_data')
         
-        # تهيئة حالة NLTK
+        
         self.nltk_available = False
         self.punkt_available = False
         
         try:
-            # إنشاء مجلد NLTK_DATA إذا لم يكن موجوداً
             os.makedirs(self.nltk_data_dir, exist_ok=True)
             
-            # إضافة مسار NLTK المخصص إلى المسارات
+            
             if self.nltk_data_dir not in nltk.data.path:
                 nltk.data.path.append(self.nltk_data_dir)
             
-            # محاولة تحميل Punkt بدون تنزيل
+           
             punkt_path = os.path.join(self.nltk_data_dir, 'tokenizers', 'punkt')
             if os.path.exists(punkt_path):
                 self.punkt_available = True
             
-            # محاولة تنزيل Punkt إذا لم يكن موجوداً
+            
             if not self.punkt_available:
                 try:
                     nltk.download('punkt', download_dir=self.nltk_data_dir, quiet=True)
@@ -47,7 +46,7 @@ class AdvancedArabicProcessor:
                 except Exception as e:
                     print(f"تحذير: تعذر تنزيل Punkt tokenizer - سيتم استخدام البديل البسيط: {str(e)}")
             
-            # تنزيل الموارد الإضافية بشكل صامت
+           
             optional_resources = ['stopwords', 'averaged_perceptron_tagger', 'maxent_ne_chunker', 'words']
             for resource in optional_resources:
                 resource_path = os.path.join(self.nltk_data_dir, resource)
@@ -60,11 +59,11 @@ class AdvancedArabicProcessor:
             self.nltk_available = True
         
         except Exception as e:
-            print(f"تحذير: خطأ في إعداد موارد NLTK - سيتم استخدام التحليل البسيط: {str(e)}")        # أدوات متقدمة
+            print(f"تحذير: خطأ في إعداد موارد NLTK - سيتم استخدام التحليل البسيط: {str(e)}")       
         self.stemmer = ISRIStemmer()
         self.sentence_model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
         
-        # كلمات الوقف المحسنة
+       
         self.arabic_stopwords = set([
             'في', 'من', 'إلى', 'على', 'عن', 'مع', 'هذا', 'هذه', 'ذلك', 'تلك',
             'التي', 'الذي', 'اللذان', 'اللتان', 'اللذين', 'اللتين',
@@ -76,7 +75,7 @@ class AdvancedArabicProcessor:
             'ما', 'لا', 'لم', 'لن', 'كل', 'بعض', 'جميع', 'كلا', 'كلتا'
         ])
         
-        # أنماط الأسئلة العربية
+     
         self.question_patterns = {
             'من': ['شخص', 'اسم', 'هوية'],
             'ما': ['شيء', 'تعريف', 'وصف'],
@@ -87,56 +86,56 @@ class AdvancedArabicProcessor:
             'كم': ['عدد', 'كمية', 'مقدار']
         }
         
-        # تحميل spaCy
+     
         try:
             self.nlp = spacy.load("ar_core_news_sm")
         except:
             self.nlp = None
     
     def advanced_clean_text(self, text: str) -> str:
-        """تنظيف متقدم للنص"""
+        
         if not text:
             return ""
         
-        # إزالة HTML tags
+      
         text = re.sub(r'<[^>]+>', '', text)
         
-        # إزالة URLs
+     
         text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
         
-        # إزالة الأرقام الإنجليزية والعربية
+       
         text = re.sub(r'[0-9٠-٩]+', ' ', text)
         
-        # إزالة علامات الترقيم مع الحفاظ على النقاط المهمة
+       
         text = re.sub(r'[{}]'.format(re.escape(string.punctuation)), ' ', text)
         text = re.sub(r'[،؛؟!""''()\\[\\]{}]', ' ', text)
         
-        # تطبيع المسافات
+     
         text = re.sub(r'\s+', ' ', text)
         
-        # تطبيع الأحرف العربية المتقدم
+        
         text = self.advanced_normalize_arabic(text)
         
         return text.strip()
     
     def advanced_normalize_arabic(self, text: str) -> str:
         """تطبيع متقدم للأحرف العربية"""
-        # تطبيع الألف
+     
         text = re.sub(r'[إأآا]', 'ا', text)
         
-        # تطبيع التاء المربوطة والهاء
+        
         text = re.sub(r'ة', 'ه', text)
         
-        # تطبيع الياء
+        
         text = re.sub(r'ى', 'ي', text)
         
-        # إزالة التشكيل
+       
         text = re.sub(r'[ًٌٍَُِّْ]', '', text)
         
-        # تطبيع الواو
+        
         text = re.sub(r'ؤ', 'و', text)
         
-        # تطبيع الياء المهموزة
+
         text = re.sub(r'ئ', 'ي', text)
         
         return text
