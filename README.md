@@ -16,7 +16,6 @@ A sophisticated question-answering system that combines semantic search, context
 
 ```
 project/
-├── app.py                  # Main application file
 ├── smart_app.py           # Enhanced application with smart features
 ├── requirements.txt       # Project dependencies
 ├── data/                 # Training and validation data
