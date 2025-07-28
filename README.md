@@ -82,13 +82,13 @@ The system will be available at `http://localhost:5000`
 ## Example Interface
 
 ### Main Interface
-![Main Interface](images/main-interface.png)
+![Main Interface](images/first_interface.png)
 
 ### Question Analysis
-![Question Analysis](images/question-analysis.png)
+![Question Analysis](images/example.png)
 
 ### Answer Generation
-![Answer Generation](images/answer-generation.png)
+![Answer Generation](images/example2.png)
 
 The system provides a modern, intuitive interface with:
 - Clean and responsive design
