@@ -14,12 +14,12 @@ except Exception as e:
 
 app = Flask(__name__)
 
-# مسارات الملفات
+
 EMBEDDINGS_DIR = "embeddings"
 INDEX_PATH = os.path.join(EMBEDDINGS_DIR, "faiss_index.index")
 CONTEXTS_PATH = os.path.join(EMBEDDINGS_DIR, "unique_contexts.txt")
 
-# متغيرات عامة
+
 retriever = None
 generator = None
 
@@ -42,14 +42,14 @@ def initialize_smart_system():
         print(f"Error during initialization: {e}")
         return False
 
-# HTML template محسن للنظام الذكي
+
 SMART_HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 نظام RAG الذكي المتقدم</title>
+    <title> نظام RAG الذكي المتقدم</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -415,14 +415,14 @@ def smart_ask():
                 'used_contexts': 0
             })
         
-        # استرجاع السياقات مع التحليل المتقدم
+        # Retrieve contexts with advanced analysis
         retrieval_result = retriever.retrieve_with_context_analysis(question)
         contexts = retrieval_result.get('analyzed_results', [])
         
-        # توليد الإجابة الذكية
+        
         answer_result = generator.generate_smart_answer(question, contexts)
         
-        # استخراج السياقات للعرض
+       
         context_texts = [ctx['context'] for ctx in contexts] if contexts else []
         
         return jsonify({
