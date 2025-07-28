@@ -154,16 +154,6 @@ Both models run completely offline, ensuring:
 - GPU acceleration is automatically used if available, otherwise falls back to CPU.
 - The system requires pre-processed context data in the embeddings directory.
 
-## Future Enhancements
-
-- [ ] Multi-language support
-- [ ] Real-time context updating
-- [ ] Advanced caching mechanism
-- [ ] API documentation
-- [ ] Docker containerization
-- [ ] Integration with larger Arabic-specific LLMs
-- [ ] Model fine-tuning for Arabic content
-- [ ] Distributed model inference
 
 ## License
 
