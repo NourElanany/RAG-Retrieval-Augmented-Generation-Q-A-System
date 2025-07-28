@@ -1,0 +1,40 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Model files and embeddings
+embeddings/*.npy
+embeddings/*.index
+
+# VS Code settings
+.vscode/
+
+# Environment variables
+.env
+
+# Data files
+data/*.csv
+!data/sample.csv
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
